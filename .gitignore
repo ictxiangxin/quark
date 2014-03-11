@@ -1,0 +1,17 @@
+# Ignore all files
+*.*
+
+# Add .gitignore
+!.gitignore
+
+# Add code files
+!*.S
+!*.h
+!*.c
+
+# Add files for 'make'
+!Makefile
+!*.make
+
+# Add documentation files
+!*.md
