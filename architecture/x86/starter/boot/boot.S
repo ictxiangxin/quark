@@ -1,5 +1,7 @@
 #include "boot.h"
 
+#define PRINT(string) call print; .asciz string;
+
 .file "boot.S"
 .text
 .code16
@@ -9,39 +11,96 @@ _start:
 
 start:
 
-    /* flat memory mode */
-    ljmp    $0x0, $BOOT_BASE + relocate
+    /* go to 0x7c0:0x0 */
+    ljmp    $BOOT_BASE, $BOOT_OFFSET + relocate
+
+    boot_device_base:   .long 0x0
+    boot_device_number: .byte 0x80
 
 relocate:
 
     /* in danger */
     cli
 
-    xorw    %ax, %ax
+    movw    %cs, %ax
     movw    %ax, %ss
     movw    %ax, %ds
     movw    %ax, %es
-    movw    $BOOT_BASE, %sp
+    movw    $BOOT_OFFSET, %sp
 
     /* safe now */
     sti
 
     /* clean screen */
-    movw    $0x3, %ax
-    int     $0x10
-    movw    $0x600, %ax
-    movw    $0x700, %bx
-    xorw    %cx, %cx
-    movw    $0x184f, %dx
-    int     $0x10
-    xorw    %dx, %dx
-    xorb    %bh, %bh
-    movb    0x2, %ah
-    int     $0x1
+#include <clean_screen.S>
 
+    PRINT("quark\r\n")
+
+    movw    $0x3, %di /* try 3 times */
+load_starter:
+    movw    $STARTER_DEVICE_OFFSET, %ax
+    xorw    %bx, %bx
+    xorw    %cx, %cx
+    xorw    %dx, %dx
+    addw    (boot_device_base), %ax
+    adcw    (boot_device_base + 0x2), %bx
+    adcw    $0x0, %cx
+    movw    %ax, (BlockNumberLow)
+    movw    %bx, (BlockNumberLow + 0x2)
+    movw    %cx, (BlockNumberHigh)
+    movw    %dx, (BlockNumberHigh + 0x2)
+    movb    (boot_device_number), %dl
+    movb    $0x42, %ah
+    movw    $DAP, %si
+    int     $0x13
+    jnc     load_success
+    cmpb    $0x80, %ah /* time out ? */
+    je      load_error
+    decw    %di
+    jl      load_error
+    xorb    %ah, %ah
+    int     $0x13
+    jnc     load_starter
+    jmp     load_error
+
+load_success:
+    ljmp    $STARTER_BASE, $STARTER_OFFSET
+
+load_error:
+    mov     error_number + 0x3, %si 
+print_number:
+    movb    %ah, %al
+    andb    $0xf, %al
+    cmpb    $0xa, %al
+    jb      print_digit
+    addb    $0x7, %al
+print_digit:
+    addb    %al, (%si)
+    decw    %si
+    movb    $0x4, %cl
+    shrb    %cl, %ah
+    jnz     print_number
     call    print
-    .asciz  "quark"
-    jmp     .
+    .ascii  "Load Starter Error: "
+error_number:
+    .asciz  "0x00\r\n"
+    
+boot_fail:
+    PRINT("Boot Fail! Press Any Key To Reboot...")
+    xorb    %ah, %ah
+    int     $0x16
+    PRINT("\r\n")
+    int     $0x19
 
 /* inline function: print */
 #include <print.S>
+
+/* Disk Address Packet */
+DAP:  
+    PacketSize:       .byte  0x10 /* this always is 16 bytes */
+    Reserved:         .byte  0x0
+    BlockCount:       .word  STARTER_SIZE
+    BufferOffset:     .word  STARTER_OFFSET
+    BufferSegment:    .word  STARTER_BASE
+    BlockNumberLow:   .long  0x0
+    BlockNumberHigh:  .long  0x0
