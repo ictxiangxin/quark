@@ -1,10 +1,12 @@
 include ../../../../tools.make
 
-header = ../../include/
+.PHONY : clean
+
+head   = ../../include/
 inline = ../library/inline/
 
 boot.b: boot.S
-	$(CC) -E -I $(header) -I $(inline) -o boot.i $<
+	$(CC) -E -I $(head) -I $(inline) -o boot.i $<
 	$(AS) --warn -o boot.o boot.i
 	$(OBJCOPY) -O binary boot.o $@
 

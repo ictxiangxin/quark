@@ -1,13 +1,10 @@
-#include "boot.h"
+#include <boot.h>
 
 #define PRINT(string) call print; .asciz string;
 
 .file "boot.S"
 .text
 .code16
-.global _start
-
-_start:
 
 start:
 
@@ -104,3 +101,4 @@ DAP:
     BufferSegment:    .word  STARTER_BASE
     BlockNumberLow:   .long  0x0
     BlockNumberHigh:  .long  0x0
+
