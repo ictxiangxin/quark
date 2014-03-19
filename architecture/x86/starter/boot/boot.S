@@ -8,8 +8,8 @@
 
 start:
 
-    /* go to 0x7c0:0x0 */
-    ljmp    $BOOT_BASE, $BOOT_OFFSET + relocate
+    /* relocate boot code */
+    ljmp    $BOOT_BASE, $(BOOT_OFFSET + relocate)
 
     boot_device_base:   .long 0x0
     boot_device_number: .byte 0x80
@@ -19,6 +19,7 @@ relocate:
     /* in danger */
     cli
 
+    /* set environment */
     movw    %cs, %ax
     movw    %ax, %ss
     movw    %ax, %ds
@@ -33,6 +34,7 @@ relocate:
 
     PRINT("quark\r\n")
 
+/* load starter */
     movw    $0x3, %di /* try 3 times */
 load_starter:
     movw    $STARTER_DEVICE_OFFSET, %ax
@@ -60,11 +62,13 @@ load_starter:
     jnc     load_starter
     jmp     load_error
 
+/* success and run starter */
 load_success:
     ljmp    $STARTER_BASE, $STARTER_OFFSET
 
+/* print the error code returned by int 0x13 */
 load_error:
-    mov     error_number + 0x3, %si 
+    mov     $(error_number + 0x3), %si
 print_number:
     movb    %ah, %al
     andb    $0xf, %al
@@ -81,7 +85,8 @@ print_digit:
     .ascii  "Load Starter Error: "
 error_number:
     .asciz  "0x00\r\n"
-    
+
+/* need reboot computer */
 boot_fail:
     PRINT("Boot Fail! Press Any Key To Reboot...")
     xorb    %ah, %ah
