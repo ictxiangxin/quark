@@ -1,3 +1,4 @@
 #!/bin/sh
 
-dd if=$1/architecture/$2/starter/real.b of=$3 seek=1 count=1 conv=notrunc
+cat $1/architecture/$2/starter/real_mode.b $1/starter/core.b > $1/starter/starter
+dd if=$1/starter/starter of=$3 seek=1 count=16 conv=notrunc

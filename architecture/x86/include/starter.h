@@ -1,7 +1,13 @@
 #ifndef _STARTER_H_
 #define _STARTER_H_
 
+.equ GDT_LIMIT, 0x1fff
+
 .equ GDT_ADDRESS, 0x1000
+.equ CORE_ADDRESS, 0x10000
+
+.equ CODE_SELECTOR, 0x8
+.equ DATA_SELECTOR, 0x10
 
 /*
  * This macro will create a new segment descriptor in GDT.

@@ -4,16 +4,17 @@ include ../../../tools.make
 
 head   = ../include/
 inline = library/inline/
+global = ../../../include/
 
-all: boot real.b
+all: boot real_mode.b
 
 boot:
 	(cd boot; $(MAKE))
 
-real.b: real.S
-	$(CC) -E -I $(head) -I $(inline) -o real.i $<
-	$(AS) --warn -o real.o real.i
-	$(OBJCOPY) -O binary real.o $@
+real_mode.b: real_mode.S
+	$(CC) -E -I $(head) -I $(inline) -I $(global) -o real_mode.i $<
+	$(AS) --warn -o real_mode.o real_mode.i
+	$(OBJCOPY) -O binary real_mode.o $@
 
 clean:
 	$(RM) -f *.i *.o *.b
