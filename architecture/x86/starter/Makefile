@@ -3,7 +3,7 @@ include ../../../tools.make
 .PHONY : boot clean
 
 head   = ../include/
-inline = library/inline/
+inline = ../library/inline/
 global = ../../../include/
 
 all: boot real_mode.b

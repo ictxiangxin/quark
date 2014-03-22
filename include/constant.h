@@ -6,4 +6,7 @@
 #define TRUE  1
 #define FLASE 0
 
+#define PUBLIC extern
+#define PRIVATE static
+
 #endif

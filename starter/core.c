@@ -1,6 +1,13 @@
 void main()
 {
-    int* g = (int *)0xb8000;
-    *g = 0x05550555;
+    int b = get_cursor_location();
+    init_screen();
+    put_character('i');
+    put_character('c');
+    put_character('t');
+    put_character('\n');
+    put_character('i');
+    put_character('c');
+    put_character('t');
     return;
 }

@@ -3,7 +3,7 @@ include ../../../../tools.make
 .PHONY : clean
 
 head   = ../../include/
-inline = ../library/inline/
+inline = ../../library/inline/
 
 boot.b: boot.S
 	$(CC) -E -I $(head) -I $(inline) -o boot.i $<
