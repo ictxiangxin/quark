@@ -2,6 +2,7 @@
 #include <type.h>
 #include <io/vga.h>
 #include <io/print.h>
+#include <io/bios_color.h>
 
 PRIVATE uint _width;
 PRIVATE uint _high;

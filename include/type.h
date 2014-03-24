@@ -13,4 +13,8 @@
 #define u16 unsigned short int
 #define u8  unsigned char
 
+#define dword unsigned long int
+#define word  unsigned short int
+#define byte  unsigned char
+
 #endif
