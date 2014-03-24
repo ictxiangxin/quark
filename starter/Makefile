@@ -1,22 +1,24 @@
 include ../tools.make
 
-.PHONY : library clean
+.PHONY : io clean
 
+architecture_object = $(x86_object)
 architecture_library = $(x86_library)
 
-x86_library = ../architecture/x86/library/io/video/vga_character.o \
-              ../architecture/x86/library/io/video/print.o \
-              ../architecture/x86/library/physical_memory.o \
+x86_object = ../architecture/x86/starter/io/video/vga_character.o \
+             ../architecture/x86/starter/io/video/print.o \
 
-library = library/io/video/print.o
+x86_library = ../architecture/x86/library/physical_memory.o \
 
-all: library core.b
+io_object = io/video/print.o
+
+all: io core.b
 
 core.b: core
 	$(OBJCOPY) -O binary $< $@
 
 core: entry.o core.o
-	$(LD) -s -Ttext 0x10000 -o $@ $^ $(architecture_library) $(library)
+	$(LD) -s -Ttext 0x10000 -o $@ $^ $(architecture_object) $(architecture_library) $(io_object)
 
 core.o: core.c
 	$(CC) -c -o $@ $<
@@ -24,9 +26,9 @@ core.o: core.c
 entry.o: entry.S
 	$(AS) --warn -o $@ $<
 
-library:
-	(cd library; $(MAKE))
+io:
+	(cd io; $(MAKE))
 
 clean:
 	$(RM) -f *.o *.b core starter
-	(cd library; $(MAKE) $@)
+	(cd io; $(MAKE) $@)

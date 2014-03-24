@@ -1,4 +1,4 @@
-include ../../../tools.make
+include ../../tools.make
 
 .PHONY : video clean
 

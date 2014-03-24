@@ -1,7 +1,16 @@
 void main()
 {
     init_screen();
-    print("name:%s\nos:%s\nversion:%d\nhex:0x%x\n", "ict", "quark", 1000, 0x1234);
     print("\nHello World!!!\n");
+
+    int a = 0, b = 1;
+    int i = 0;
+    for(i = 0; i < 20; i++)
+    {
+        print("%d ", b);
+        int tmp = b;
+        b += a;
+        a = tmp;
+    }
     return;
 }

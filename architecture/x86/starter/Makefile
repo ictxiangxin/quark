@@ -1,15 +1,18 @@
 include ../../../tools.make
 
-.PHONY : boot clean
+.PHONY : boot io clean
 
 head   = ../include/
 inline = ../library/inline/
 global = ../../../include/
 
-all: boot real_mode.b
+all: boot io real_mode.b
 
 boot:
 	(cd boot; $(MAKE))
+
+io:
+	(cd io; $(MAKE))
 
 real_mode.b: real_mode.S
 	$(CC) -E -I $(head) -I $(inline) -I $(global) -o real_mode.i $<
@@ -19,3 +22,4 @@ real_mode.b: real_mode.S
 clean:
 	$(RM) -f *.i *.o *.b
 	(cd boot; $(MAKE) $@)
+	(cd io; $(MAKE) $@)
