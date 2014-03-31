@@ -1,6 +1,6 @@
 void main()
 {
-    init_screen();
+    initialize();
     print("\nHello World!!!\n");
 
     int a = 0, b = 1;

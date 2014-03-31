@@ -9,7 +9,7 @@ PRIVATE uint _high;
 PRIVATE uint _cursor_location;
 PRIVATE uint _start_location;
 
-PUBLIC void init_screen()
+PUBLIC void initialize_screen()
 {
     _cursor_location = get_cursor_location();
     _start_location = get_start_location();

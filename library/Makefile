@@ -1,1 +1,1 @@
-include ../../tools.make
+include ../tools.make

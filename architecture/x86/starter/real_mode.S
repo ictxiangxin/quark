@@ -1,5 +1,6 @@
-#include <boot.h>
-#include <starter.h>
+#include <starter/boot.h>
+#include <starter/constant.h>
+#include <starter/macro.h>
 #include <protect.h>
 
 #define PRINT(string) call print; .asciz string;

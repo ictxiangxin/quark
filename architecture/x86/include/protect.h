@@ -47,4 +47,30 @@
 #define DA_ESP            0x4000
 #define DA_SP             0x0000
 
+#ifndef _ASSEMBLY_
+typedef struct segment_descriptor_t
+{
+    u16 segment_limit_15_0;
+    u16 segment_base_15_0;
+    u8  segment_base_23_16;
+    u8  segment_attribute_low;
+    u8  segment_attribute_high;
+    u8  segment_base_31_24;
+} SEGMENT_DESCRIPTOR;
+
+typedef struct gate_descriptor_t
+{
+    u16 gate_offset_15_0;
+    u16 gate_selector;
+    u16 gate_attribute;
+    u16 gate_offset_31_16;
+} GATE_DESCRIPTOR;
+
+typedef struct idtr_t
+{
+    u16 idt_limit;
+    u32 idt_base;
+} IDTR;
+#endif
+
 #endif
