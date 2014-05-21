@@ -71,6 +71,8 @@ typedef struct idtr_t
     u16 idt_limit;
     u32 idt_base;
 } IDTR;
+
+void i_lidt(IDTR* idtr);
 #endif
 
 #endif

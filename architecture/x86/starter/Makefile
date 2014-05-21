@@ -2,7 +2,7 @@ include ../../../tools.make
 
 .PHONY : boot io clean
 
-global = ../../../include/
+global_head = ../../../include/
 head   = ../include/
 inline = ../library/inline/
 
@@ -15,12 +15,12 @@ io:
 	(cd io; $(MAKE))
 
 real_mode.b: real_mode.S
-	$(CC) -E -I $(head) -I $(inline) -I $(global) -D _ASSEMBLY_ -o real_mode.i $<
+	$(CC) -E -I $(head) -I $(inline) -I $(global_head) -D _ASSEMBLY_ -o real_mode.i $<
 	$(AS) --warn -o real_mode.o real_mode.i
 	$(OBJCOPY) -O binary real_mode.o $@
 
 initialize.o: initialize.c
-	$(CC) -c -I $(head) -I $(global) -o $@ $<
+	$(CC) -c -std=c99 -I $(head) -I $(global_head) -o $@ $<
 
 clean:
 	$(RM) -f *.i *.o *.b

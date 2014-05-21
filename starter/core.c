@@ -1,5 +1,6 @@
+#include <type.h>
 #include <starter.h>
-#include <print.h>
+#include <video.h>
 
 void main()
 {

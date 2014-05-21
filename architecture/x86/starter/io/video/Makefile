@@ -2,7 +2,7 @@ include ../../../../../tools.make
 
 .PHONY : clean
 
-global = ../../../../../include/
+global_head = ../../../../../include/
 head   = ../../../include/
 
 all: vga_character.o print.o
@@ -12,7 +12,7 @@ vga_character.o: vga_character.S
 	$(AS) --warn -o $@ vga_character.i
 
 print.o: print.c
-	$(CC) -c -I $(global) -I $(head) -o $@ $<
+	$(CC) -c -std=c99 -I $(global_head) -I $(head) -o $@ $<
 
 clean:
 	$(RM) -f *.i *.o

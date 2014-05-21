@@ -1,5 +1,6 @@
 #include <type.h>
 #include <protect.h>
+#include <video_character.h>
 #include <starter/constant.h>
 
 PRIVATE void initialize_idt();
@@ -7,7 +8,7 @@ PRIVATE void initialize_idt();
 PUBLIC void initialize()
 {
     initialize_idt();
-    initialize_screen();
+    initialize_video_character();
 }
 
 PRIVATE void initialize_idt()

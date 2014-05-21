@@ -1,5 +1,8 @@
 #include <constant.h>
 #include <type.h>
+#include <protect.h>
+#include <memory.h>
+#include <video_character.h>
 #include <io/vga.h>
 #include <io/print.h>
 #include <io/bios_color.h>
@@ -9,7 +12,7 @@ PRIVATE uint _high;
 PRIVATE uint _cursor_location;
 PRIVATE uint _start_location;
 
-PUBLIC void initialize_screen()
+PUBLIC void initialize_video_character()
 {
     _cursor_location = get_cursor_location();
     _start_location = get_start_location();
@@ -57,6 +60,6 @@ PRIVATE void _refresh()
 
 PRIVATE void _refresh_screen()
 {
-    physical_memory_copy(_start_location * 0x2 + VGA_CHARACTER_BASE, VGA_CHARACTER_BASE, _width * _high);
-    physical_memory_fill(VGA_CHARACTER_BASE + _width * _high, (VGA_CHARACTER_BASE - _width * _high) * 0x2, 0x0);
+    physical_memory_copy((void*)(_start_location * 0x2 + VGA_CHARACTER_BASE), (void*)VGA_CHARACTER_BASE, _width * _high);
+    physical_memory_fill((void*)(VGA_CHARACTER_BASE + _width * _high), (VGA_CHARACTER_BASE - _width * _high) * 0x2, 0x0);
 }
