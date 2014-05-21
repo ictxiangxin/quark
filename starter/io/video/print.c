@@ -1,5 +1,6 @@
 #include <type.h>
 #include <argument.h>
+#include <print.h>
 
 PRIVATE void _print_signed_number(uint number, uint base);
 

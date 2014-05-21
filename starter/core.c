@@ -1,3 +1,6 @@
+#include <starter.h>
+#include <print.h>
+
 void main()
 {
     initialize();

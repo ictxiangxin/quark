@@ -5,6 +5,9 @@ include ../tools.make
 architecture_object = $(x86_object)
 architecture_library = $(x86_library)
 
+head = ../include/
+starter_head = ./include/
+
 x86_object = ../architecture/x86/starter/io/video/vga_character.o \
              ../architecture/x86/starter/io/video/print.o \
              ../architecture/x86/starter/initialize.o
@@ -23,7 +26,7 @@ core: entry.o core.o
 	$(LD) -s -Ttext 0x10000 -o $@ $^ $(architecture_object) $(architecture_library) $(io_object)
 
 core.o: core.c
-	$(CC) -c -o $@ $<
+	$(CC) -c -std=c99 -I $(head) -I $(starter_head) -o $@ $<
 
 entry.o: entry.S
 	$(AS) --warn -o $@ $<
