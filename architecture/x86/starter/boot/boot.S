@@ -3,10 +3,13 @@
 #define PRINT(string) call print; .asciz string;
 
 .file "boot.S"
+
+.global _start
+
 .text
 .code16
 
-start:
+_start:
 
     /* relocate boot code */
     ljmp    $BOOT_BASE, $(BOOT_OFFSET + relocate)

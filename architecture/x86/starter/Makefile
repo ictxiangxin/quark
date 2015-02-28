@@ -14,13 +14,17 @@ boot:
 io:
 	(cd io; $(MAKE))
 
-real_mode.b: real_mode.S
-	$(CC) -E -I $(head) -I $(inline) -I $(global_head) -D _ASSEMBLY_ -o real_mode.i $<
-	$(AS) --warn -o real_mode.o real_mode.i
-	$(OBJCOPY) -O binary real_mode.o $@
+real_mode.b: real_mode.o
+	$(LD) -Ttext 0 --oformat binary -melf_i386 -o $@ $<
+
+real_mode.o: real_mode.i
+	$(AS) --warn --32 -o $@ $<
+
+real_mode.i: real_mode.S
+	$(CC) -E -I $(head) -I $(inline) -I $(global_head) -D _ASSEMBLY_ -o $@ $<
 
 initialize.o: initialize.c
-	$(CC) -c -std=c99 -I $(head) -I $(global_head) -o $@ $<
+	$(CC) -c -std=c99 -m32 -I $(head) -I $(global_head) -o $@ $<
 
 clean:
 	$(RM) -f *.i *.o *.b

@@ -28,7 +28,7 @@
     /* flat address mode */
     movw    $(\number), %di
     shlw    $0x3, %di
-    add     $GDT_ADDRESS, %di
+    add     $GDT_BASE, %di
 
     /* temp space from stack */
     movw    %sp, %bp

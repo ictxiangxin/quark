@@ -6,13 +6,16 @@
 #define PRINT(string) call print; .asciz string;
 
 .file "real_mode.S"
+
+.equ STARTER_ADDRESS, STARTER_OFFSET + STARTER_BASE * 0x10
+.equ CORE_OLD_ADDRESS, end_of_code + STARTER_OFFSET + STARTER_BASE * 0x10
+
+.global _start
+
 .text
 .code16
 
-.equ STARTER_ADDRESS, STARTER_OFFSET + STARTER_BASE * 0x10
-.equ CORE_OLD_ADDRESS, end + STARTER_OFFSET + STARTER_BASE * 0x10
-
-start:
+_start:
     /* in danger */
     cli
 
@@ -69,7 +72,7 @@ start:
 /* use to fill gdtr */
 GDTR:
     GDTR_limit: .word GDT_LIMIT
-    GDTR_base:  .long GDT_ADDRESS
+    GDTR_base:  .long GDT_BASE
 
 /* inline function: print */
 #include <print.S>
@@ -99,6 +102,4 @@ protected_mode:
     /* run starter core */
     ljmp    $CODE_SELECTOR, $CORE_ADDRESS
 
-ELF_program_number: .word 0x0
-
-end:
+end_of_code:

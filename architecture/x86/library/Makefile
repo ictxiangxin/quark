@@ -7,16 +7,20 @@ head   = ../include/
 
 all: low_level.o physical_memory.o protected_mode.o
 
-low_level.o: low_level.S
-	$(CC) -E -o low_level.i $<
-	$(AS) --warn -o $@ low_level.i
+low_level.o: low_level.i
+	$(AS) --warn --32 -o $@ $<
 
-physical_memory.o: physical_memory.S
-	$(CC) -E -o physical_memory.i $<
-	$(AS) --warn -o $@ physical_memory.i
+low_level.i: low_level.S
+	$(CC) -E -o $@ $<
+
+physical_memory.o: physical_memory.i
+	$(AS) --warn --32 -o $@ $<
+
+physical_memory.i: physical_memory.S
+	$(CC) -E -o $@ $<
 
 protected_mode.o: protected_mode.c
-	$(CC) -c -I $(head) -I$(global) -o $@ $<
+	$(CC) -c -std=c99 -m32 -I $(head) -I$(global) -o $@ $<
 
 clean:
 	rm -f *.i *.o

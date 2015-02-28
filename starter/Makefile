@@ -19,17 +19,14 @@ io_object = io/video/print.o
 
 all: io core.b
 
-core.b: core
-	$(OBJCOPY) -O binary $< $@
-
-core: entry.o core.o
-	$(LD) -s -Ttext 0x10000 -o $@ $^ $(architecture_object) $(architecture_library) $(io_object)
+core.b: entry.o core.o
+	$(LD) -s -Ttext 0x10000 --oformat binary -melf_i386 -o $@ $^ $(architecture_object) $(architecture_library) $(io_object)
 
 core.o: core.c
-	$(CC) -c -std=c99 -I $(head) -I $(starter_head) -o $@ $<
+	$(CC) -c -std=c99 -m32 -I $(head) -I $(starter_head) -o $@ $<
 
 entry.o: entry.S
-	$(AS) --warn -o $@ $<
+	$(AS) --warn --32 -o $@ $<
 
 io:
 	(cd io; $(MAKE))
