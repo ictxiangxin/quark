@@ -56,7 +56,7 @@ typedef struct segment_descriptor_t
     u8  segment_attribute_low;
     u8  segment_attribute_high;
     u8  segment_base_31_24;
-} SEGMENT_DESCRIPTOR;
+} __attribute__((packed)) SEGMENT_DESCRIPTOR;
 
 typedef struct gate_descriptor_t
 {
@@ -64,15 +64,13 @@ typedef struct gate_descriptor_t
     u16 gate_selector;
     u16 gate_attribute;
     u16 gate_offset_31_16;
-} GATE_DESCRIPTOR;
+} __attribute__((packed)) GATE_DESCRIPTOR;
 
 typedef struct idtr_t
 {
     u16 idt_limit;
     u32 idt_base;
-} IDTR;
-
-void i_lidt(IDTR* idtr);
+} __attribute__((packed)) IDTR;
 #endif
 
 #endif

@@ -1,7 +1,7 @@
 #include <starter/boot.h>
 #include <starter/constant.h>
 #include <starter/macro.h>
-#include <protect.h>
+#include <protected_mode.h>
 
 #define PRINT(string) call print; .asciz string;
 

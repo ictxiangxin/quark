@@ -12,8 +12,7 @@ x86_object = ../architecture/x86/starter/io/video/vga_character.o \
              ../architecture/x86/starter/io/video/print.o \
              ../architecture/x86/starter/initialize.o
 
-x86_library = ../architecture/x86/library/physical_memory.o \
-              ../architecture/x86/library/low_level.o
+x86_library = ../architecture/x86/library/physical_memory.o
 
 io_object = io/video/print.o
 

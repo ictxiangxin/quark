@@ -5,13 +5,7 @@ include ../../../tools.make
 global = ../../../include/
 head   = ../include/
 
-all: low_level.o physical_memory.o protected_mode.o
-
-low_level.o: low_level.i
-	$(AS) --warn --32 -o $@ $<
-
-low_level.i: low_level.S
-	$(CC) -E -o $@ $<
+all: physical_memory.o protected_mode.o
 
 physical_memory.o: physical_memory.i
 	$(AS) --warn --32 -o $@ $<

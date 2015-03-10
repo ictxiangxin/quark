@@ -1,6 +1,6 @@
 #include <constant.h>
 #include <type.h>
-#include <protect.h>
+#include <protected_mode.h>
 #include <memory.h>
 #include <video_character.h>
 #include <io/vga.h>

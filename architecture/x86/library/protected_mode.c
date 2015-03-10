@@ -1,5 +1,5 @@
 #include "type.h"
-#include "protect.h"
+#include "protected_mode.h"
 
 PUBLIC void set_segment_descriptor(SEGMENT_DESCRIPTOR *segment_descriptor, u32 base, u32 limit, u16 attribute)
 {
