@@ -2,7 +2,7 @@
 #include <type.h>
 #include <protected_mode.h>
 #include <memory.h>
-#include <video_character.h>
+#include <io/video_character.h>
 #include <io/vga.h>
 #include <io/print.h>
 #include <io/bios_color.h>

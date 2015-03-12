@@ -1,3 +1,6 @@
+#ifndef _VGA_H_
+#define _VGA_H_
+
 /* vga I/O constants */
 #define START_HIGH     0xc
 #define START_LOW      0xd
@@ -8,3 +11,5 @@
 
 /* vga address */
 #define VGA_CHARACTER_BASE 0xb8000
+
+#endif
